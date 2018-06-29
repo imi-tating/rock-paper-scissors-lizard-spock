@@ -1,0 +1,29 @@
+/* * {
+    border: 1px solid pink;
+} */
+
+#main-title-bar {
+    padding: 0;
+}
+
+.titleCharacter {
+    white-space: nowrap;
+}
+
+#title-play {
+    margin: 40px 0 0 0;
+}
+
+#rock, #paper, #scissors, #lizard, #spock {
+    margin-bottom: 10px;
+}
+
+p {
+   text-align: center;
+}
+
+#game-count {
+  clear: both;
+  padding: 30px 0;
+}
+
