@@ -9,66 +9,186 @@
     <link rel="stylesheet" href="style.css">
     <title>Rock Paper Scissors</title>
 </head>
-<body>
-    <div class="container" id="game">
-        <p>Press r, p, or s to start playing!</p>
+<body> 
+    <div class="jumbotron">
+        <div class="container" id="main-title-bar">
+            <h1 class="display-4 text-secondary">
+                <span class="titleCharacter"><i class="far fa-hand-rock"></i> Rock</span>
+                <span class="titleCharacter"><i class="far fa-hand-paper"></i> Paper</span>
+                <span class="titleCharacter"><i class="far fa-hand-scissors"></i> Scissors</span>
+                <span class="titleCharacter"><i class="far fa-hand-lizard"></i> Lizard</span>
+                <span class="titleCharacter"><i class="far fa-hand-spock"></i> Spock</span>
+            </h1>
+            <p class="lead text-muted" id="title-play">Let's Play!</p> 
+        </div>       
     </div>
 
+    <div class="container" id="game-pieces">
+        <div class="row">
+            <div id="rock">
+                 <div class="col-lg-2">
+                    <div class="card mx-auto" style="width: 12rem;">
+                        <img class="card-img-top" src="images/rock.png" alt="rock">
+                        <div class="card-body">
+                            <p class="card-text"><small>crushes Lizard <br> crushes Scissors</small></p>
+                            <button class="btn btn-dark" id="rock-btn" style="width:100%;">I Choose Rock!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="paper">
+                <div class="col-lg-2">
+                    <div class="card mx-auto" style="width: 12rem;">
+                        <img class="card-img-top" src="images/paper.png" alt="paper">
+                        <div class="card-body">
+                            <p class="card-text"><small>covers Rock<br>disproves Spock</small></p>
+                            <button class="btn btn-dark" id="paper-btn" style="width:100%;">I Choose Paper!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="scissors">
+                <div class="col-lg-2">
+                    <div class="card mx-auto" style="width: 12rem;">
+                        <img class="card-img-top" src="images/scissors.png" alt="scissors">
+                        <div class="card-body">
+                            <p class="card-text"><small>cuts Paper<br>decapitates Lizard</small></p>
+                            <button class="btn btn-dark" id="scissors-btn" style="width:100%;">I Choose Scissors!</button>
+                        </div>  
+                    </div>   
+                </div>                          
+            </div>
+            <div id="lizard">
+                <div class="col-lg-2">
+                    <div class="card mx-auto" style="width: 12rem;">
+                        <img class="card-img-top" src="images/lizard.png" alt="lizard">
+                        <div class="card-body">
+                            <p class="card-text"><small>poisons Spock<br>eats Paper</small></p>
+                            <button class="btn btn-dark" id="lizard-btn" style="width:100%;">I Choose Lizard!</button>
+                        </div>  
+                    </div>   
+                </div> 
+            </div>
+            <div id="spock">
+                <div class="col-lg-2">
+                    <div class="card mx-auto" style="width: 12rem;">
+                        <img class="card-img-top" src="images/spock.png" alt="spock">
+                        <div class="card-body">
+                            <p class="card-text"><small>smashes Scissors<br>vaporizes Rock</small></p>
+                            <button class="btn btn-dark" id="spock-btn" style="width:100%;">I Choose Spock!</button>
+                        </div>  
+                    </div>   
+                </div>      
+            </div>
+        </div>     
+    </div> 
+
+    <div class="container" id="game-count">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="column">
+                        <h2 class="lead">You Chose: <span id="userChoice"> </span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <h2 class="lead">Computer Chose: <span id="computerChoice"> </span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <h2 class="lead" id="results"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="column">
+                        <h2 class="lead">Wins: <span id="wins">0</span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <h2 class="lead">Loses: <span id="loses">0</span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <h2 class="lead">Ties: <span id="ties">0</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
 
     <script type="text/javascript">
 
-        // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
-        var computerChoices = ["r", "p", "s"];
+        var computerOptions = ["r", "p", "s", "l", "k"];
+        var userChoiceMap = {
+            'rock-btn': 'r',
+            'paper-btn': 'p',
+            'scissors-btn': 's',
+            'lizard-btn': 'l',
+            'spock-btn': 'k'
+        }
+
+        var displayedChoice = {
+            'r': 'rock',
+            'p': 'paper',
+            's': 'scissors',
+            'l': 'lizard',
+            'k': 'spock'
+        }
 
         var wins = 0;
-        var losses = 0;
+        var loses = 0;
         var ties = 0;
 
-        // This function is run whenever the user presses a key.
-        document.onkeyup = function(event) {
-
-        // Determines which key was pressed.
-        var userGuess = event.key;
-
-        // Randomly chooses a choice from the options array. This is the Computer's guess.
-        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-
-        // Alerts the key the user pressed (userGuess).
-        //alert("User guess: " + userGuess);
-
-        // Alerts the Computer's guess.
-        //alert("Computer guess: " + computerGuess);
-
-       
-
-            if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
-                if ((userGuess) == (computerGuess)) {
-                alert("You chose " + userGuess + ". The computer chose " + computerGuess + ". It's a Tie!");
-                ties++;
-                } else if ((userGuess == "r") && (computerGuess == "s")) {
-                    alert("You chose " + userGuess + ". The computer chose " + computerGuess + ". You Win!");
+        document.onclick = function(event) {
+            var userChoice = userChoiceMap[event.target.id];
+            var computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
+            
+            if (event.target.id.includes("btn")) {
+                //alert(userChoice);
+                if (userChoice == computerChoice) {
+                    document.querySelector("#results").textContent = "It's a Tie!";
+                    ties++;
+                } else if (userChoice == "r" && (computerChoice == "s" || computerChoice == "l")) {
+                    document.querySelector("#results").textContent = "You Win!";
                     wins++;
-                } else if ((userGuess == "p") && (computerGuess == "r")) {
-                    alert("You chose " + userGuess + ". The computer chose " + computerGuess + ". You Win!");
+                } else if (userChoice == "p" && (computerChoice == "r" || computerChoice == "k")) {
+                    document.querySelector("#results").textContent = "You Win!";
                     wins++;
-                } else if ((userGuess == "s") && (computerGuess == "p")) {
-                    alert("You chose " + userGuess + ". The computer chose " + computerGuess + ". You Win!");
+                } else if (userChoice == "s" && (computerChoice == "p" || computerChoice == "l")) {
+                    document.querySelector("#results").textContent = "You Win!";
+                    wins++;
+                } else if (userChoice == "l" && (computerChoice == "k" || computerChoice == "p")) {
+                    document.querySelector("#results").textContent = "You Win!";
+                    wins++;
+                } else if (userChoice == "k" && (computerChoice == "s" || computerChoice == "r")) {
+                    document.querySelector("#results").textContent = "You Win!";
                     wins++;
                 } else {
-                    alert("You chose " + userGuess + ". The computer chose " + computerGuess + ". You Lose!");
-                    losses++;
+                    document.querySelector("#results").textContent = "You Lose!";
+                    loses++;
                 }
 
-                var html = 
-                    "<p>You chose: " + userGuess + "</p>" +
-                    "<p>The computer chose: " + computerGuess + "</p>" +
-                    "<p>wins: " + wins + "</p>" +
-                    "<p>losses: " + losses + "</p>" +
-                    "<p>ties: " + ties + "</p>";
+                document.querySelector("#userChoice").textContent = displayedChoice[userChoice];
+                document.querySelector("#computerChoice").textContent = displayedChoice[computerChoice];
 
-                document.querySelector("#game").innerHTML = html;
-                }
-         };
+                document.querySelector("#wins").textContent = wins;
+                document.querySelector("#loses").textContent = loses;
+                document.querySelector("#ties").textContent = ties;
+            }
+            
+        };
+
+        
+
+
 
     </script>
 
