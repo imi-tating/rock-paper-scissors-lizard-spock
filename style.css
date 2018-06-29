@@ -2,10 +2,6 @@
     border: 1px solid pink;
 } */
 
-#main-title-bar {
-    padding: 0;
-}
-
 .titleCharacter {
     white-space: nowrap;
 }
