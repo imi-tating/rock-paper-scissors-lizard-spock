@@ -20,6 +20,11 @@
 
 p {
    text-align: center;
+   line-height: .9em;
+}
+
+.game-button {
+    line-height: 2em;
 }
 
 #game-count {
